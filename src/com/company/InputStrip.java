@@ -7,12 +7,12 @@ public class InputStrip {
     private ArrayList<String> strip ;
 
     public InputStrip(){
-        strip = new ArrayList<String>();
+        strip = new ArrayList<>();
     }
 
     public InputStrip(String inputString){
-        String str[] = inputString.split(",");
-        strip = new ArrayList<String>();
+        String[] str = inputString.split(",");
+        strip = new ArrayList<>();
         strip.addAll(Arrays.asList(str));
     }
 
@@ -39,7 +39,8 @@ public class InputStrip {
 
     public void printStrip(){
         for(String string:strip)
-            System.out.println(string);
+            System.out.print(string);
+            System.out.println();
     }
 
 }

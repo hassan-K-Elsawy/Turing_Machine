@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import static java.lang.System.exit;
 
 public class Automata {
+
+    //TM = (k, Sig, Gam, S, del)
+
+    //k = set of states inferred from rules
+    //Sig = input lang {0,1} constant
+    //Gam = machine lang {0, 1, #} constant
+    //S = init state
+    //del = rules
+
     AutomataHead head;
     ArrayList<String> states;
     String initState;
@@ -11,13 +20,15 @@ public class Automata {
     ArrayList<Rule> rules;
     ArrayList<Rule> traceRules;
 
-    public Automata(ArrayList<String> states, String initState, InputStrip strip){
-        this.states = states;
+    public Automata(String initState, InputStrip strip){
+
+        this.states = new ArrayList<>();
         this.initState = initState;
         this.currState = initState;
-        this.rules = new ArrayList<Rule>();
+        this.rules = new ArrayList<>();
         this.head = new AutomataHead(strip);
-        this.traceRules = new ArrayList<Rule>();
+        this.traceRules = new ArrayList<>();
+
     }
 
     public void addRule(Rule r){
@@ -25,48 +36,36 @@ public class Automata {
     }
 
     private int action(String action){
-        /*switch(action) {
-            case "R":
+
+        switch (action) {
+            case "R" -> {
                 head.moveRight();
                 return 0;
-
-            case "L":
+            }
+            case "L" -> {
                 head.moveLeft();
                 return 0;
-
-            case "Y":
+            }
+            case "Y", "N" -> {
                 printTrace();
                 return 1;
-
-            case "N":
-                printTrace();
-                return 1;
-
-            default:
+            }
+            default -> {
                 System.out.println("Incorrct Action");
                 exit(1);
                 return 1;
-        }*/
-        if(action.equals("R")){
-            head.moveRight();
-            return 0;
-        }else if(action.equals("L")){
-            head.moveLeft();
-            return 0;
-        }else if(action.equals("Y")){
-            printTrace();
-            return 1;
-        }else if(action.equals("N")){
-            printTrace();
-            return 1;
-        }else{
-            System.out.println("Incorrct Action");
-            exit(1);
-            return 1;
+            }
         }
     }
 
     public void start(){
+
+        for (Rule r:rules){
+            String temp = r.initState;
+            if(!states.contains(temp)){
+                states.add(temp);
+            }
+        }
 
         String temp = head.getCurrent();
         boolean accRej = false;
